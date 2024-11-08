@@ -1,0 +1,17 @@
+com\mycompany\controleassociacao\controllers\MeetingController.class
+com\mycompany\controleassociacao\models\FinancialReport.class
+com\mycompany\controleassociacao\models\Payment.class
+com\mycompany\controleassociacao\controllers\MemberController.class
+com\mycompany\controleassociacao\models\Adm.class
+com\mycompany\controleassociacao\models\Member.class
+com\mycompany\controleassociacao\ControleAssociacao.class
+com\mycompany\controleassociacao\utils\UUIDGenerator.class
+com\mycompany\controleassociacao\models\Meeting.class
+com\mycompany\controleassociacao\controllers\FinancialReportController.class
+com\mycompany\controleassociacao\serializables\MeetingSerializable.class
+com\mycompany\controleassociacao\serializables\MemberSerializable.class
+com\mycompany\controleassociacao\controllers\PaymentController.class
+com\mycompany\controleassociacao\models\Payment$Method.class
+com\mycompany\controleassociacao\serializables\SerializableObject.class
+com\mycompany\controleassociacao\serializables\PaymentSerializable.class
+com\mycompany\controleassociacao\models\Payment$Status.class
