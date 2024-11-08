@@ -18,7 +18,7 @@ public final class MeetingSerializable extends SerializableObject {
     private ArrayList<Meeting> meetings = new ArrayList<>();
 
     private MeetingSerializable() {
-        super("/meeting.bin");
+        super("meeting.bin");
         try {
             this.meetings = (ArrayList<Meeting>) this.readObjects();
         } catch (Exception ex) {
@@ -37,10 +37,10 @@ public final class MeetingSerializable extends SerializableObject {
         try {
             this.meetings.add(meeting);
             this.writeObjects(meetings);
-            return "Meeting saved successfully";
+            return "Reunião criada com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to save meeting";
+            return "Erro ao criar nova reunião!";
         }
     }
 
@@ -54,10 +54,10 @@ public final class MeetingSerializable extends SerializableObject {
             meeting.setMembers(updatedMeeting.getMembers());
 
             this.writeObjects(meetings);
-            return "Meeting updated successfully";
+            return "Reunião atualizada com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to update meeting";
+            return "Erro ao atualizar dados da reunião!";
         }
     }
 
@@ -69,10 +69,10 @@ public final class MeetingSerializable extends SerializableObject {
             });
 
             this.writeObjects(meetings);
-            return "Meeting updated successfully";
+            return "Reunião atualizada com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to update meeting";
+            return "Erro ao atualizar dados da reunião!";
         }
     }
 
@@ -84,10 +84,10 @@ public final class MeetingSerializable extends SerializableObject {
             });
 
             this.writeObjects(meetings);
-            return "Meeting updated successfully";
+            return "Reunião atualizada com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to update meeting";
+            return "Erro ao atualizar dados da reunião!";
         }
     }
 
@@ -95,10 +95,10 @@ public final class MeetingSerializable extends SerializableObject {
         try {
             this.meetings.removeIf(meeting -> meeting.getId() == meetingId);
             this.writeObjects(meetings);
-            return "Meeting removed successfully";
+            return "Reunião cancelada com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to remove meeting";
+            return "Erro ao cancelar reunião!";
         }
     }
 
@@ -123,10 +123,10 @@ public final class MeetingSerializable extends SerializableObject {
             Meeting meeting = this.getMeetingById(meetingId);
             meeting.addConfirmation(memberConfirmed);
             this.writeObjects(meetings);
-            return "Meeting updated successfully";
+            return "Reunião atualizada com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to updated meeting";
+            return "Erro ao atualizar dados da reunião!";
         }
     }
 }

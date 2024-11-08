@@ -1,5 +1,6 @@
 C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\ControleAssociacao.java
 C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\controllers\FinancialReportController.java
+C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\controllers\LoginController.java
 C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\controllers\MeetingController.java
 C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\controllers\MemberController.java
 C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\controllers\PaymentController.java
@@ -13,3 +14,8 @@ C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\s
 C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\serializables\PaymentSerializable.java
 C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\serializables\SerializableObject.java
 C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\utils\UUIDGenerator.java
+C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\utils\Validate.java
+C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\views\Home.java
+C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\views\Login.java
+C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\views\MeetingForm.java
+C:\Users\Karol\faculdade\ESII\projeto04\controle-associacao\ControleAssociacao\src\main\java\com\mycompany\controleassociacao\views\MemberForm.java

@@ -10,15 +10,15 @@ import java.io.Serializable;
  *
  * @author Karol
  */
-public class Adm implements Serializable{
+public class Adm {
     private String name;
     private String email;
     private String password;
 
-    public Adm(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    public Adm() {
+        this.name = "Administrador";
+        this.email = "admin";
+        this.password = "admin";
     }
 
     public String getName() {

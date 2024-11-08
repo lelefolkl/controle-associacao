@@ -17,7 +17,7 @@ public final class MemberSerializable extends SerializableObject {
     private ArrayList<Member> members = new ArrayList<>();
 
     private MemberSerializable() {
-        super("/members.bin");
+        super("members.bin");
         try {
             this.members = (ArrayList<Member>) this.readObjects();
         } catch (Exception ex) {
@@ -36,10 +36,10 @@ public final class MemberSerializable extends SerializableObject {
         try {
             this.members.add(member);
             this.writeObjects(members);
-            return "Member saved successfully";
+            return "Associado criado com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to save member";
+            return "Erro ao criar novo Associado";
         }
     }
 
@@ -64,10 +64,10 @@ public final class MemberSerializable extends SerializableObject {
             member.setRg(updatedMember.getRg());
 
             this.writeObjects(members);
-            return "Member updated successfully";
+            return "Associado atualizado com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to update Member";
+            return "Erro ao atualizar dados do associado!";
         }
     }
 
@@ -75,10 +75,14 @@ public final class MemberSerializable extends SerializableObject {
         try {
             members.removeIf(member -> member.getId() == memberId);
             this.writeObjects(members);
-            return "Member updated successfully";
+            return "Associado atualizado com sucesso!";
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "Error to update Member";
+            return "Erro ao atualizar dados do associado!";
         }
+    }
+    
+    public ArrayList<Member> getAll(){
+        return this.members;
     }
 }

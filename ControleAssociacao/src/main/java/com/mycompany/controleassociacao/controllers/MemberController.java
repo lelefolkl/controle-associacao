@@ -7,6 +7,7 @@ package com.mycompany.controleassociacao.controllers;
 import com.mycompany.controleassociacao.models.Member;
 import com.mycompany.controleassociacao.serializables.MemberSerializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,5 +33,9 @@ public class MemberController {
     
     public String updateMember(int memberId, Member updatedMember){
         return serializable.updateMember(memberId, updatedMember);
+    }
+    
+    public ArrayList<Member> getAllMembers() {
+        return serializable.getAll();
     }
 }

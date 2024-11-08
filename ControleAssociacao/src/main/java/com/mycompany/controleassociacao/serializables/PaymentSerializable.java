@@ -18,7 +18,7 @@ public final class PaymentSerializable extends SerializableObject {
     private ArrayList<Payment> payments = new ArrayList<>();
 
     private PaymentSerializable() {
-        super("/payments.bin");
+        super("payments.bin");
         try {
             this.payments = (ArrayList<Payment>) this.readObjects();
         } catch (Exception ex) {
