@@ -4,15 +4,8 @@
  */
 package com.mycompany.controleassociacao.views.payment;
 
-import com.mycompany.controleassociacao.controllers.MemberController;
 import com.mycompany.controleassociacao.controllers.PaymentController;
-import com.mycompany.controleassociacao.models.Member;
 import com.mycompany.controleassociacao.models.Payment;
-import com.mycompany.controleassociacao.utils.Validate;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 /**
@@ -52,7 +45,7 @@ public class EditPaymentStatus extends javax.swing.JDialog {
 
         jLabel1.setText("Atualizar status do pagamento");
 
-        paymentStatusField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Confirmado", "Recusado", " " }));
+        paymentStatusField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Aprovado", "Recusado", "" }));
         paymentStatusField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -111,7 +104,7 @@ public class EditPaymentStatus extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -122,9 +115,7 @@ public class EditPaymentStatus extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

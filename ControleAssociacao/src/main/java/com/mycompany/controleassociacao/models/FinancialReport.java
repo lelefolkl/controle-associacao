@@ -20,10 +20,8 @@ public class FinancialReport implements Serializable {
     final private List<Payment> pendentPayments = new ArrayList<>();
     final private List<Payment> approvedPayments = new ArrayList<>();
     final private List<Payment> refusedPayments = new ArrayList<>();
-    private List<Payment> allPayments;
 
     public FinancialReport(List<Payment> allPayments) {
-        this.allPayments = allPayments;
 
         allPayments.forEach(payment -> {
             if (payment.getStatus() == Payment.Status.APPROVED) {
@@ -41,6 +39,26 @@ public class FinancialReport implements Serializable {
 
     @Override
     public String toString() {
-        return "";
+        String str = "";
+
+        str += "\n Total confirmado: " + Float.toString(this.totalApproved);
+        str += "\n Total pendente: " + Float.toString(this.totalPendent);
+        str += "\n Total recusado: " + Float.toString(this.totalRefused);
+        
+        str += "\n\n Pagamentos Aprovados: ";
+        for(Payment confirmed: this.approvedPayments){
+            str += confirmed.toString();
+        }
+        
+        str += "\n\n Pagamentos Pendentes: ";
+        for(Payment pendent: this.pendentPayments){
+            str += pendent.toString();
+        }
+        
+        str += "\n\n Pagamentos Recusados: ";
+        for(Payment refused: this.refusedPayments){
+            str += refused.toString();
+        }
+        return str;
     }
 }

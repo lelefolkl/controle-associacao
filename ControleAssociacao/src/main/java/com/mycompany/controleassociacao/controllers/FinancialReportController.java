@@ -13,8 +13,10 @@ import java.time.YearMonth;
  * @author Karol
  */
 public class FinancialReportController {
+    
+    public FinancialReportController(){}
 
-    private PaymentController paymentController = new PaymentController();
+    private final PaymentController paymentController = new PaymentController();
 
     public FinancialReport getGeneralReport() {
         return new FinancialReport(paymentController.getAllPayments());

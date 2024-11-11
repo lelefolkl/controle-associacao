@@ -46,6 +46,7 @@ public class ListPayments extends javax.swing.JPanel {
             JLabel labelName = new JLabel(payment.getMember().getName());
             JLabel labelId = new JLabel(payment.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             JLabel valueLabel = new JLabel(Float.toString(payment.getValue()));
+            JLabel statusLabel = new JLabel(payment.getStatus().toString());
 
             JButton buttonEdit = new JButton("Atualizar");
             JButton buttonDelete = new JButton("Excluir");
@@ -74,8 +75,10 @@ public class ListPayments extends javax.swing.JPanel {
             rowLayout.setLayout(new BoxLayout(rowLayout, BoxLayout.X_AXIS));
             rowLayout.add(labelName);
             rowLayout.add(Box.createHorizontalStrut(32));
-            rowLayout.add(Box.createHorizontalStrut(32));
             rowLayout.add(valueLabel);
+            rowLayout.add(Box.createHorizontalStrut(32));
+            rowLayout.add(statusLabel);
+            rowLayout.add(Box.createHorizontalStrut(32));
             rowLayout.add(labelId);
             rowLayout.add(Box.createHorizontalStrut(32));
             rowLayout.add(buttonEdit);

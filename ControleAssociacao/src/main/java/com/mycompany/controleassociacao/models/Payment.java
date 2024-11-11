@@ -7,17 +7,54 @@ package com.mycompany.controleassociacao.models;
 import com.mycompany.controleassociacao.utils.UUIDGenerator;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author Karol
  */
 public class Payment implements Serializable {
-    public enum Method {CREDIT_CARD, PIX, BANK_SLIP, TED};
-    public enum Status {APPROVED, PENDING, REFUSED};
-    
+
+    public enum Method {
+        CREDIT_CARD, PIX, BANK_SLIP, TED;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case CREDIT_CARD:
+                    return "Cartão de crédito";
+                case PIX:
+                    return "Pix";
+                case BANK_SLIP:
+                    return "Boleto";
+                case TED:
+                    return "Transferência";
+                default:
+                    return super.toString();
+            }
+        }
+    };
+
+    public enum Status {
+        APPROVED, PENDING, REFUSED;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case APPROVED:
+                    return "Aprovado";
+                case PENDING:
+                    return "Pendente";
+                case REFUSED:
+                    return "Recusado";
+                default:
+                    return super.toString();
+            }
+        }
+    };
+
     private Method method;
-    private float   value;
+    private float value;
     private LocalDate date;
     private Status status;
     private Member member;
@@ -32,10 +69,10 @@ public class Payment implements Serializable {
         this.id = UUIDGenerator.generateUniqueIntID();
     }
 
-    public int getId(){
+    public int getId() {
         return this.id;
     }
-    
+
     public Method getMethod() {
         return method;
     }
@@ -75,6 +112,12 @@ public class Payment implements Serializable {
     public void setMember(Member member) {
         this.member = member;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "\n\n Associado: " + this.member.getName() + "\n valor: " + Float.toString(this.value)
+                + "\n data: " + this.date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n status: "
+                + this.status.toString() + "\n metódo de pagamento: " + this.method.toString();
+    }
+
 }

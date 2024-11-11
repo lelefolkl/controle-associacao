@@ -4,6 +4,7 @@
  */
 package com.mycompany.controleassociacao.views.core;
 
+import com.mycompany.controleassociacao.views.financialReports.GeneralFinancialReport;
 import com.mycompany.controleassociacao.views.payment.RegisterPayment;
 import com.mycompany.controleassociacao.views.payment.ListPayments;
 import com.mycompany.controleassociacao.views.member.ListMembers;
@@ -210,7 +211,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        
+        GeneralFinancialReport form = new GeneralFinancialReport();
+        showForm(form);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
