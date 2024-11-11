@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -43,7 +44,9 @@ public class ListMembers extends javax.swing.JPanel {
 
         members.forEach(member -> {
             JLabel labelName = new JLabel(member.getName());
-            JLabel labelId = new JLabel(Integer.toString(member.getId()));
+            JTextField labelId = new JTextField(Integer.toString(member.getId()));
+            labelId.setEditable(false);
+            labelId.setMaximumSize(new Dimension(120, 24));
             JButton buttonEdit = new JButton("Editar");
             JButton buttonDelete = new JButton("Excluir");
 

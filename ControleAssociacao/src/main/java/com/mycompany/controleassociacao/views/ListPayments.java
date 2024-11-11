@@ -9,6 +9,7 @@ import com.mycompany.controleassociacao.models.Payment;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -43,7 +44,9 @@ public class ListPayments extends javax.swing.JPanel {
 
         payments.forEach(payment -> {
             JLabel labelName = new JLabel(payment.getMember().getName());
-            JLabel labelId = new JLabel(payment.getDate().toString());
+            JLabel labelId = new JLabel(payment.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            JLabel valueLabel = new JLabel(Float.toString(payment.getValue()));
+
             JButton buttonEdit = new JButton("Atualizar");
             JButton buttonDelete = new JButton("Excluir");
 
@@ -56,7 +59,7 @@ public class ListPayments extends javax.swing.JPanel {
             buttonDelete.setBackground(Color.red);
             buttonDelete.setForeground(Color.white);
             buttonDelete.setBorder(null);
-             buttonDelete.setMaximumSize(buttonDimension);
+            buttonDelete.setMaximumSize(buttonDimension);
             buttonDelete.setMinimumSize(buttonDimension);
 
             buttonEdit.addActionListener(e -> {
@@ -65,16 +68,18 @@ public class ListPayments extends javax.swing.JPanel {
             buttonEdit.setBackground(Color.blue);
             buttonEdit.setForeground(Color.white);
             buttonEdit.setBorder(null);
-             buttonEdit.setMaximumSize(buttonDimension);
+            buttonEdit.setMaximumSize(buttonDimension);
             buttonEdit.setMinimumSize(buttonDimension);
 
             rowLayout.setLayout(new BoxLayout(rowLayout, BoxLayout.X_AXIS));
             rowLayout.add(labelName);
-            rowLayout.add(Box.createHorizontalStrut(90));
+            rowLayout.add(Box.createHorizontalStrut(32));
+            rowLayout.add(Box.createHorizontalStrut(32));
+            rowLayout.add(valueLabel);
             rowLayout.add(labelId);
-            rowLayout.add(Box.createHorizontalStrut(90));
+            rowLayout.add(Box.createHorizontalStrut(32));
             rowLayout.add(buttonEdit);
-            rowLayout.add(Box.createHorizontalStrut(90));
+            rowLayout.add(Box.createHorizontalStrut(32));
             rowLayout.add(buttonDelete);
 
             dataPanel.add(rowLayout);

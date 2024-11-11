@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -47,7 +48,9 @@ public class ListMeetings extends javax.swing.JPanel {
 
         meetings.forEach(meet -> {
             JLabel labelName = new JLabel(meet.getTitle());
-            JLabel labelId = new JLabel(Integer.toString(meet.getId()));
+            JTextField labelId = new JTextField(Integer.toString(meet.getId()));
+            labelId.setEditable(false);
+            labelId.setMaximumSize(new Dimension(120, 24));
             JButton buttonEdit = new JButton("Editar");
             JButton buttonDelete = new JButton("Cancelar");
             JButton buttonPresences = new JButton("Presenças");

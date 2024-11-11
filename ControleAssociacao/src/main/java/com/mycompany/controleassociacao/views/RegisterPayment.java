@@ -105,7 +105,7 @@ public class RegisterPayment extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap(107, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -118,7 +118,7 @@ public class RegisterPayment extends javax.swing.JPanel {
                             .addComponent(valueField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(paymentMethodField, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 42, Short.MAX_VALUE)
+                                .addGap(0, 173, Short.MAX_VALUE)
                                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -128,7 +128,7 @@ public class RegisterPayment extends javax.swing.JPanel {
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(title, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(24, 24, 24))))
+                        .addContainerGap(164, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +197,7 @@ public class RegisterPayment extends javax.swing.JPanel {
                     "Valor inválida", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
         Payment.Method methodEnum = Payment.Method.PIX;
         switch (method) {
             case "PIX" ->
@@ -211,6 +211,13 @@ public class RegisterPayment extends javax.swing.JPanel {
         }
 
         Member member = memberController.getMemberById(memberIdInt);
+        
+        if(member == null){
+            JOptionPane.showMessageDialog(null, "Associado não encontrado!",
+                    "Não encontrado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         String response = controller.registerPayment(member, valueFloat, methodEnum);
         
         JOptionPane.showMessageDialog(null, response,
