@@ -48,6 +48,7 @@ public final class MeetingSerializable extends SerializableObject {
         try {
             Meeting meeting = this.getMeetingById(meetingId);
 
+            meeting.setTitle(updatedMeeting.getTitle());
             meeting.setAddress(updatedMeeting.getAddress());
             meeting.setDate(updatedMeeting.getDate());
             meeting.setMeetingAgenda(updatedMeeting.getMeetingAgenda());

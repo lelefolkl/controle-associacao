@@ -263,6 +263,8 @@ public class EditMember extends javax.swing.JDialog {
             birthDateField.setText(member.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             addressField.setText(member.getAddress());
             cellphoneField.setText(member.getCellphone());
+            
+            title.setText("Editar " + member.getName());
         } else {
             JOptionPane.showMessageDialog(this, "Membro não encontrado!", "Error", JOptionPane.ERROR_MESSAGE);
             dispose();

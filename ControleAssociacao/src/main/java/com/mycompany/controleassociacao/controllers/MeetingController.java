@@ -57,4 +57,8 @@ public class MeetingController {
     public String addConfirmation(int meetingId, Member memberConfirmed) {
         return serializable.addConfirmation(meetingId, memberConfirmed);
     }
+
+    public ArrayList<Meeting> getAllMeetings(){
+        return serializable.getAllMeetings();
+    }
 }
