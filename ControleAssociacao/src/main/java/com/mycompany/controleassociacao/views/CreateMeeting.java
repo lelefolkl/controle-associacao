@@ -24,7 +24,7 @@ import javax.swing.JScrollPane;
  *
  * @author Karol
  */
-public class MeetingForm extends javax.swing.JPanel {
+public class CreateMeeting extends javax.swing.JPanel {
 
     ArrayList<Member> members = new ArrayList<>();
     MemberController memberController = new MemberController();
@@ -32,7 +32,7 @@ public class MeetingForm extends javax.swing.JPanel {
     /**
      * Creates new form CreateMetting
      */
-    public MeetingForm() {
+    public CreateMeeting() {
         initComponents();
 
         initMembers();
@@ -83,6 +83,7 @@ public class MeetingForm extends javax.swing.JPanel {
         scrollPane = new javax.swing.JScrollPane();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(643, 386));
 
         jLabel2.setText("Título");
 
@@ -163,7 +164,7 @@ public class MeetingForm extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
