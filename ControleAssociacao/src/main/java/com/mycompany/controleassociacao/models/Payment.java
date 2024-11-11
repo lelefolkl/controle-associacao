@@ -23,10 +23,10 @@ public class Payment implements Serializable {
     private Member member;
     final private int id;
 
-    public Payment(Method method, float value, Status status, Member member) {
+    public Payment(Method method, float value, Member member) {
         this.method = method;
         this.value = value;
-        this.status = status;
+        this.status = Status.PENDING;
         this.member = member;
         this.date = LocalDate.now();
         this.id = UUIDGenerator.generateUniqueIntID();

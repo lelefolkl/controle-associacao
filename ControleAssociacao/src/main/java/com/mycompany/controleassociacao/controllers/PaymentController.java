@@ -4,6 +4,7 @@
  */
 package com.mycompany.controleassociacao.controllers;
 
+import com.mycompany.controleassociacao.models.Member;
 import com.mycompany.controleassociacao.models.Payment;
 import com.mycompany.controleassociacao.serializables.PaymentSerializable;
 import java.time.LocalDate;
@@ -18,6 +19,11 @@ public class PaymentController {
     final PaymentSerializable serializable = PaymentSerializable.getInstance();
 
     public PaymentController() {
+    }
+    
+    public String registerPayment(Member member, float value, Payment.Method method) {
+        Payment newPayment = new Payment(method,value,member);
+        return serializable.registerPayment(newPayment);
     }
 
     public Payment getPaymentById(int paymentId) {
@@ -38,6 +44,14 @@ public class PaymentController {
     
     public ArrayList<Payment> getAllPayments(){
         return serializable.getPayments();
+    }
+    
+    public String deletePayment(int id){
+        return serializable.deletePayment(id);
+    }
+    
+    public String updateStatus(int id, Payment.Status status){
+        return serializable.updatePaymentStatus(id, status);
     }
 
 }
