@@ -2,8 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.controleassociacao.views;
+package com.mycompany.controleassociacao.views.core;
 
+import com.mycompany.controleassociacao.views.payment.RegisterPayment;
+import com.mycompany.controleassociacao.views.payment.ListPayments;
+import com.mycompany.controleassociacao.views.member.ListMembers;
+import com.mycompany.controleassociacao.views.member.CreateMember;
+import com.mycompany.controleassociacao.views.meeting.CreateMeeting;
+import com.mycompany.controleassociacao.views.meeting.ListMeetings;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
@@ -39,6 +45,9 @@ public class Home extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -105,6 +114,21 @@ public class Home extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Relatórios");
+
+        jMenuItem7.setText("Relatório geral");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem7);
+
+        jMenuItem8.setText("Relatório por membro");
+        jMenu3.add(jMenuItem8);
+
+        jMenuItem9.setText("Relatório mensal");
+        jMenu3.add(jMenuItem9);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Associados");
@@ -185,6 +209,10 @@ public class Home extends javax.swing.JFrame {
         showForm(form);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -233,5 +261,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

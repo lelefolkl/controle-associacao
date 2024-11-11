@@ -2,32 +2,73 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package com.mycompany.controleassociacao.views;
+package com.mycompany.controleassociacao.views.meeting;
 
-import com.mycompany.controleassociacao.controllers.MemberController;
-import com.mycompany.controleassociacao.controllers.PaymentController;
+import com.mycompany.controleassociacao.controllers.MeetingController;
+import com.mycompany.controleassociacao.models.Meeting;
 import com.mycompany.controleassociacao.models.Member;
-import com.mycompany.controleassociacao.models.Payment;
-import com.mycompany.controleassociacao.utils.Validate;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  *
  * @author Karol
  */
-public class EditPaymentStatus extends javax.swing.JDialog {
-    int id;
+public class MeetingPresences extends javax.swing.JDialog {
+
+    private final int id;
+    private final MeetingController controller = new MeetingController();
+    private final ArrayList<Member> confirmations = new ArrayList<>();
+
     /**
-     * Creates new form EditPaymentStatus
+     * Creates new form MeetingPresences
+     *
+     * @param parent
+     * @param modal
+     * @param id
      */
-    public EditPaymentStatus(java.awt.Frame parent, boolean modal, int id) {
+    public MeetingPresences(java.awt.Frame parent, boolean modal, int id) {
         super(parent, modal);
-        initComponents();
         this.id = id;
+        initComponents();
+        initMembers();
+    }
+
+    private void initMembers() {
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        JPanel checkboxPanel = new JPanel();
+        checkboxPanel.setLayout(new BoxLayout(checkboxPanel, BoxLayout.Y_AXIS));
+        ArrayList<Member> members = controller.getMeetingById(this.id).getMembers();
+
+        members.forEach(member -> {
+            JCheckBox checkBox = new JCheckBox(member.getName() + " - " + member.getId());
+            checkBox.setSelected(memberAlreadyInList(member));
+            checkBox.setEnabled(!memberAlreadyInList(member));
+
+            checkBox.addItemListener(e -> {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    confirmations.add(member);
+                }
+            });
+            checkboxPanel.add(checkBox);
+        });
+
+        scrollPane.setViewportView(checkboxPanel);
+    }
+
+    private boolean memberAlreadyInList(Member member) {
+        for (Member memberList : controller.getConfirmationsByMeeting(this.id)) {
+            if (member.getId() == memberList.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -40,23 +81,16 @@ public class EditPaymentStatus extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        paymentStatusField = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        scrollPane = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setText("Atualizar status do pagamento");
-
-        paymentStatusField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Confirmado", "Recusado", " " }));
-        paymentStatusField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Atualizar pagamento");
+        jPanel1.setPreferredSize(new java.awt.Dimension(643, 386));
 
         cancelButton.setBackground(new java.awt.Color(153, 153, 153));
         cancelButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -82,49 +116,52 @@ public class EditPaymentStatus extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel1.setText("Membros presentes");
+
+        scrollPane.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(paymentStatusField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(paymentStatusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,27 +172,24 @@ public class EditPaymentStatus extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        PaymentController controller = new PaymentController();
 
-        String status = paymentStatusField.getSelectedItem().toString();
+        for (Member member : confirmations) {
+            String response = controller.addConfirmation(this.id, member);
+            if (response.equals("Erro ao atualizar dados da reunião!")) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir a presença de " + member.getName(),
+                        "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);
 
+                this.dispose();
+                return;
 
-       Payment.Status stautsEnum = Payment.Status.PENDING;
-        switch (status) {
-            case "Pendente" ->
-                stautsEnum = Payment.Status.PENDING;
-            case "Aprovado" ->
-                stautsEnum = Payment.Status.APPROVED;
-            case "Recusado" ->
-                stautsEnum = Payment.Status.REFUSED;
+            }
         }
 
-        String response = controller.updateStatus(id, stautsEnum);
-
-        JOptionPane.showMessageDialog(null, response,
-            "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Presenças atualizadas com sucesso!",
+                "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);
 
         this.dispose();
+
     }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
@@ -168,9 +202,8 @@ public class EditPaymentStatus extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JComboBox<String> paymentStatusField;
     private javax.swing.JButton saveButton;
+    private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.controleassociacao.views;
+package com.mycompany.controleassociacao.views.meeting;
 
+import com.mycompany.controleassociacao.views.meeting.MeetingPresences;
+import com.mycompany.controleassociacao.views.meeting.MeetingReportPresences;
 import com.mycompany.controleassociacao.controllers.MeetingController;
 import com.mycompany.controleassociacao.models.Meeting;
 import java.awt.Color;
@@ -187,7 +189,7 @@ public class ListMeetings extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+            .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

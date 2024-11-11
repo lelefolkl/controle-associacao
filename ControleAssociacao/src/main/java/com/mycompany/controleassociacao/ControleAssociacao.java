@@ -3,7 +3,7 @@
  */
 package com.mycompany.controleassociacao;
 
-import com.mycompany.controleassociacao.views.Login;
+import com.mycompany.controleassociacao.views.core.Login;
 import javax.swing.JFrame;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 

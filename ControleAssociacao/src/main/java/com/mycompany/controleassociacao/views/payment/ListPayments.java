@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.controleassociacao.views;
+package com.mycompany.controleassociacao.views.payment;
 
-import com.mycompany.controleassociacao.controllers.MemberController;
-import com.mycompany.controleassociacao.models.Member;
+import com.mycompany.controleassociacao.controllers.PaymentController;
+import com.mycompany.controleassociacao.models.Payment;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,44 +18,43 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 /**
  *
  * @author Karol
  */
-public class ListMembers extends javax.swing.JPanel {
+public class ListPayments extends javax.swing.JPanel {
 
-    private final MemberController controller = new MemberController();
+    private final PaymentController controller = new PaymentController();
     JPanel dataPanel = new JPanel();
 
     /**
-     * Creates new form ListMembers
+     * Creates new form ListPayments
      */
-    public ListMembers() {
+    public ListPayments() {
         initComponents();
         scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
 
-        listMembers();
+        listPayments();
     }
 
-    private void listMembers() {
-        ArrayList<Member> members = controller.getAllMembers();
+    private void listPayments() {
+        ArrayList<Payment> payments = controller.getAllPayments();
 
-        members.forEach(member -> {
-            JLabel labelName = new JLabel(member.getName());
-            JTextField labelId = new JTextField(Integer.toString(member.getId()));
-            labelId.setEditable(false);
-            labelId.setMaximumSize(new Dimension(120, 24));
-            JButton buttonEdit = new JButton("Editar");
+        payments.forEach(payment -> {
+            JLabel labelName = new JLabel(payment.getMember().getName());
+            JLabel labelId = new JLabel(payment.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            JLabel valueLabel = new JLabel(Float.toString(payment.getValue()));
+
+            JButton buttonEdit = new JButton("Atualizar");
             JButton buttonDelete = new JButton("Excluir");
 
             JPanel rowLayout = new JPanel();
             Dimension buttonDimension = new Dimension(80, 24);
 
             buttonDelete.addActionListener(e -> {
-                this.deleteMember(member.getId(), rowLayout);
+                this.deletePayment(payment.getId(), rowLayout);
             });
             buttonDelete.setBackground(Color.red);
             buttonDelete.setForeground(Color.white);
@@ -63,7 +63,7 @@ public class ListMembers extends javax.swing.JPanel {
             buttonDelete.setMinimumSize(buttonDimension);
 
             buttonEdit.addActionListener(e -> {
-                this.editMember(member.getId());
+                this.editPayment(payment.getId());
             });
             buttonEdit.setBackground(Color.blue);
             buttonEdit.setForeground(Color.white);
@@ -73,11 +73,13 @@ public class ListMembers extends javax.swing.JPanel {
 
             rowLayout.setLayout(new BoxLayout(rowLayout, BoxLayout.X_AXIS));
             rowLayout.add(labelName);
-            rowLayout.add(Box.createHorizontalStrut(90));
+            rowLayout.add(Box.createHorizontalStrut(32));
+            rowLayout.add(Box.createHorizontalStrut(32));
+            rowLayout.add(valueLabel);
             rowLayout.add(labelId);
-            rowLayout.add(Box.createHorizontalStrut(90));
+            rowLayout.add(Box.createHorizontalStrut(32));
             rowLayout.add(buttonEdit);
-            rowLayout.add(Box.createHorizontalStrut(90));
+            rowLayout.add(Box.createHorizontalStrut(32));
             rowLayout.add(buttonDelete);
 
             dataPanel.add(rowLayout);
@@ -87,18 +89,18 @@ public class ListMembers extends javax.swing.JPanel {
         scrollPanel.setViewportView(dataPanel);
     }
 
-    private void deleteMember(int id, JPanel rowLayout) {
-        int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este membro?", "Confirmação", JOptionPane.YES_NO_OPTION);
+    private void deletePayment(int id, JPanel rowLayout) {
+        int confirm = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este pagamento?", "Confirmação", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
-            controller.deleteMember(id);
+            controller.deletePayment(id);
             dataPanel.remove(rowLayout);
             dataPanel.revalidate();
             dataPanel.repaint();
         }
     }
 
-    private void editMember(int id) {
-        EditMember dialog = new EditMember(new javax.swing.JFrame(), true, id);
+    private void editPayment(int id) {
+        EditPaymentStatus dialog = new EditPaymentStatus(new javax.swing.JFrame(), true, id);
         dialog.setLocationRelativeTo(null);
         dialog.setResizable(false);
         dialog.setVisible(true);
@@ -108,7 +110,7 @@ public class ListMembers extends javax.swing.JPanel {
         }
         dataPanel.revalidate();
         dataPanel.repaint();
-        listMembers();
+        listPayments();
         dataPanel.revalidate();
         dataPanel.repaint();
     }
@@ -144,7 +146,7 @@ public class ListMembers extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+            .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
