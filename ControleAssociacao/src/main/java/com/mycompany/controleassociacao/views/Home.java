@@ -181,7 +181,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
+        ListPayments form = new ListPayments();
+        showForm(form);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**

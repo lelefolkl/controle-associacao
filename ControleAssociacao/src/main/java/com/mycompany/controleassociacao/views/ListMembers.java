@@ -8,6 +8,7 @@ import com.mycompany.controleassociacao.controllers.MemberController;
 import com.mycompany.controleassociacao.models.Member;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -47,6 +48,7 @@ public class ListMembers extends javax.swing.JPanel {
             JButton buttonDelete = new JButton("Excluir");
 
             JPanel rowLayout = new JPanel();
+            Dimension buttonDimension = new Dimension(80, 24);
 
             buttonDelete.addActionListener(e -> {
                 this.deleteMember(member.getId(), rowLayout);
@@ -54,6 +56,8 @@ public class ListMembers extends javax.swing.JPanel {
             buttonDelete.setBackground(Color.red);
             buttonDelete.setForeground(Color.white);
             buttonDelete.setBorder(null);
+            buttonDelete.setMaximumSize(buttonDimension);
+            buttonDelete.setMinimumSize(buttonDimension);
 
             buttonEdit.addActionListener(e -> {
                 this.editMember(member.getId());
@@ -61,6 +65,8 @@ public class ListMembers extends javax.swing.JPanel {
             buttonEdit.setBackground(Color.blue);
             buttonEdit.setForeground(Color.white);
             buttonEdit.setBorder(null);
+            buttonEdit.setMaximumSize(buttonDimension);
+            buttonEdit.setMinimumSize(buttonDimension);
 
             rowLayout.setLayout(new BoxLayout(rowLayout, BoxLayout.X_AXIS));
             rowLayout.add(labelName);
