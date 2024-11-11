@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class SerializableObject {
 
-    private String path;
+    final private String path;
 
     public SerializableObject(String fileName) {
         Path currentDir = Paths.get("").toAbsolutePath();
@@ -41,9 +41,6 @@ public class SerializableObject {
 
     private void initializeFileIfEmpty() {
         File file = new File(this.path);
-        System.out.println("path: " + this.path);
-
-        System.out.println("exist: " + file.exists());
 
         if (!file.exists() || file.length() == 0) {
             try (FileOutputStream fout = new FileOutputStream(file); ObjectOutputStream oos = new ObjectOutputStream(fout)) {

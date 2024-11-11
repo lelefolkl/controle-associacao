@@ -19,7 +19,7 @@ public class Meeting implements Serializable{
     private String address;
     private String meetingAgenda;
     private ArrayList<Member> members;
-    final private ArrayList<Member> confirmations;
+    private ArrayList<Member> confirmations;
     final private int id;
     
     public Meeting(String title, LocalDate date, String address, String meetingAgenda, ArrayList<Member> members) {
@@ -91,5 +91,9 @@ public class Meeting implements Serializable{
 
     public void addConfirmation(Member confirmated) {
         this.confirmations.add(confirmated);
+    }
+    
+    public void setConfirmations(ArrayList<Member> confirmations){
+        this.confirmations = confirmations;
     }
 }

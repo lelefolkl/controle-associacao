@@ -8,7 +8,6 @@ import com.mycompany.controleassociacao.controllers.MemberController;
 import com.mycompany.controleassociacao.models.Member;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -92,6 +91,7 @@ public class ListMembers extends javax.swing.JPanel {
     private void editMember(int id) {
         EditMember dialog = new EditMember(new javax.swing.JFrame(), true, id);
         dialog.setLocationRelativeTo(null);
+        dialog.setResizable(false);
         dialog.setVisible(true);
 
         for (Component comp : dataPanel.getComponents()) {

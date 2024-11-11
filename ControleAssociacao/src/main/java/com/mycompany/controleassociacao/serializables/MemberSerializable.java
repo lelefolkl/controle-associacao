@@ -14,12 +14,12 @@ import java.util.ArrayList;
 public final class MemberSerializable extends SerializableObject {
 
     private static MemberSerializable instance;
-    private ArrayList<Member> members = new ArrayList<>();
+    private static ArrayList<Member> members;
 
     private MemberSerializable() {
         super("members.bin");
         try {
-            this.members = (ArrayList<Member>) this.readObjects();
+            members = (ArrayList<Member>) this.readObjects();
         } catch (Exception ex) {
             System.out.println("Error to load initial data on MemberSerializable");
         }
@@ -34,7 +34,7 @@ public final class MemberSerializable extends SerializableObject {
 
     public String createMember(Member member) {
         try {
-            this.members.add(member);
+            members.add(member);
             this.writeObjects(members);
             return "Associado criado com sucesso!";
         } catch (Exception ex) {
@@ -83,6 +83,6 @@ public final class MemberSerializable extends SerializableObject {
     }
     
     public ArrayList<Member> getAll(){
-        return this.members;
+        return members;
     }
 }

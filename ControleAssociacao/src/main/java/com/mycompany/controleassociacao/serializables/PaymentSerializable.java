@@ -15,12 +15,12 @@ import java.util.ArrayList;
 public final class PaymentSerializable extends SerializableObject {
 
     private static PaymentSerializable instance;
-    private ArrayList<Payment> payments = new ArrayList<>();
+    private static ArrayList<Payment> payments = new ArrayList<>();
 
     private PaymentSerializable() {
         super("payments.bin");
         try {
-            this.payments = (ArrayList<Payment>) this.readObjects();
+           payments = (ArrayList<Payment>) this.readObjects();
         } catch (Exception ex) {
             System.out.println("Error to load initial data on PaymentSerializable");
         }
@@ -35,7 +35,7 @@ public final class PaymentSerializable extends SerializableObject {
 
     public String registerPayment(Payment payment) {
         try {
-            this.payments.add(payment);
+            payments.add(payment);
             this.writeObjects(payments);
             return "Payment saved successfully";
         } catch (Exception ex) {
@@ -46,7 +46,7 @@ public final class PaymentSerializable extends SerializableObject {
 
     public Payment getPaymentById(int paymentId) {
 
-        for (Payment payment : this.payments) {
+        for (Payment payment : payments) {
             if (payment.getId() == paymentId) {
                 return payment;
             }
@@ -69,7 +69,7 @@ public final class PaymentSerializable extends SerializableObject {
 
     public String deletePayment(int paymentId) {
         try {
-            this.payments.removeIf(payment -> payment.getId() == paymentId);
+            payments.removeIf(payment -> payment.getId() == paymentId);
             this.writeObjects(payments);
             return "Payment removed successfully";
         } catch (Exception ex) {
@@ -81,7 +81,7 @@ public final class PaymentSerializable extends SerializableObject {
     public ArrayList<Payment> getPaymentsByMember(int memberId) {
         ArrayList<Payment> filtered = new ArrayList<>();
 
-        for (Payment payment : this.payments) {
+        for (Payment payment : payments) {
             if (payment.getMember().getId() == memberId) {
                 filtered.add(payment);
             }
@@ -93,7 +93,7 @@ public final class PaymentSerializable extends SerializableObject {
     public ArrayList<Payment> getPaymentsByStatus(Payment.Status status) {
         ArrayList<Payment> filtered = new ArrayList<>();
 
-        for (Payment payment : this.payments) {
+        for (Payment payment : payments) {
             if (payment.getStatus() == status) {
                 filtered.add(payment);
             }
@@ -105,7 +105,7 @@ public final class PaymentSerializable extends SerializableObject {
     public ArrayList<Payment> getPaymentsByDate(LocalDate startDate, LocalDate finalDate) {
         ArrayList<Payment> filtered = new ArrayList<>();
 
-        for (Payment payment : this.payments) {
+        for (Payment payment : payments) {
             LocalDate paymentDate = payment.getDate();
             if (
                     (paymentDate.isAfter(startDate) && paymentDate.isBefore(finalDate)) || 
@@ -120,6 +120,6 @@ public final class PaymentSerializable extends SerializableObject {
     }
     
     public ArrayList<Payment> getPayments(){
-        return this.payments;
+        return payments;
     }
 }

@@ -15,13 +15,14 @@ import java.util.ArrayList;
 public final class MeetingSerializable extends SerializableObject {
 
     private static MeetingSerializable instance;
-    private ArrayList<Meeting> meetings = new ArrayList<>();
+    private static ArrayList<Meeting> meetings;
 
     private MeetingSerializable() {
         super("meeting.bin");
         try {
-            this.meetings = (ArrayList<Meeting>) this.readObjects();
+            meetings = (ArrayList<Meeting>) this.readObjects();
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println("Error to load initial data on MeetingSerializable");
         }
     }
@@ -35,7 +36,7 @@ public final class MeetingSerializable extends SerializableObject {
 
     public String createMeeting(Meeting meeting) {
         try {
-            this.meetings.add(meeting);
+            meetings.add(meeting);
             this.writeObjects(meetings);
             return "Reunião criada com sucesso!";
         } catch (Exception ex) {
@@ -94,7 +95,7 @@ public final class MeetingSerializable extends SerializableObject {
 
     public String removeMeeting(int meetingId) {
         try {
-            this.meetings.removeIf(meeting -> meeting.getId() == meetingId);
+            meetings.removeIf(meeting -> meeting.getId() == meetingId);
             this.writeObjects(meetings);
             return "Reunião cancelada com sucesso!";
         } catch (Exception ex) {
@@ -115,7 +116,7 @@ public final class MeetingSerializable extends SerializableObject {
     }
 
     public ArrayList<Meeting> getAllMeetings() {
-        return this.meetings;
+        return meetings;
     }
 
     public String addConfirmation(int meetingId, Member memberConfirmed) {

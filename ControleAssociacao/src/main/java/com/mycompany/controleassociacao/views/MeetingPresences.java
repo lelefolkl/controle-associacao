@@ -5,16 +5,10 @@
 package com.mycompany.controleassociacao.views;
 
 import com.mycompany.controleassociacao.controllers.MeetingController;
-import com.mycompany.controleassociacao.controllers.MemberController;
 import com.mycompany.controleassociacao.models.Meeting;
 import com.mycompany.controleassociacao.models.Member;
-import com.mycompany.controleassociacao.utils.Validate;
-import java.awt.Container;
 import java.awt.event.ItemEvent;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -25,26 +19,23 @@ import javax.swing.JScrollPane;
  *
  * @author Karol
  */
-public class EditMeeting extends javax.swing.JDialog {
+public class MeetingPresences extends javax.swing.JDialog {
 
     private final int id;
-    private final MeetingController meetingController = new MeetingController();
-    private final MemberController memberController = new MemberController();
-    private ArrayList<Member> members = new ArrayList<>();
-    private Meeting meeting;
+    private final MeetingController controller = new MeetingController();
+    private final ArrayList<Member> confirmations = new ArrayList<>();
 
     /**
-     * Creates new form EditMember2
+     * Creates new form MeetingPresences
      *
      * @param parent
      * @param modal
      * @param id
      */
-    public EditMeeting(java.awt.Frame parent, boolean modal, int id) {
+    public MeetingPresences(java.awt.Frame parent, boolean modal, int id) {
         super(parent, modal);
         this.id = id;
         initComponents();
-        loadMeetingData();
         initMembers();
     }
 
@@ -53,15 +44,16 @@ public class EditMeeting extends javax.swing.JDialog {
 
         JPanel checkboxPanel = new JPanel();
         checkboxPanel.setLayout(new BoxLayout(checkboxPanel, BoxLayout.Y_AXIS));
-        members = memberController.getAllMembers();
+        ArrayList<Member> members = controller.getMeetingById(this.id).getMembers();
+
         members.forEach(member -> {
             JCheckBox checkBox = new JCheckBox(member.getName() + " - " + member.getId());
             checkBox.setSelected(memberAlreadyInList(member));
+            checkBox.setEnabled(!memberAlreadyInList(member));
+
             checkBox.addItemListener(e -> {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    members.add(member);
-                } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                    members.removeIf(listMember -> member.getId() == listMember.getId());
+                    confirmations.add(member);
                 }
             });
             checkboxPanel.add(checkBox);
@@ -71,7 +63,7 @@ public class EditMeeting extends javax.swing.JDialog {
     }
 
     private boolean memberAlreadyInList(Member member) {
-        for (Member memberList : meeting.getMembers()) {
+        for (Member memberList : controller.getConfirmationsByMeeting(this.id)) {
             if (member.getId() == memberList.getId()) {
                 return true;
             }
@@ -89,17 +81,8 @@ public class EditMeeting extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        titleField = new javax.swing.JTextField();
         cancelButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        titleLabel = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        dateField = new javax.swing.JTextField();
-        addressField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        meetingAgendaField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         scrollPane = new javax.swing.JScrollPane();
 
@@ -108,16 +91,6 @@ public class EditMeeting extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(643, 386));
-
-        jLabel2.setText("Título");
-
-        titleField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        titleField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
-        titleField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                titleFieldActionPerformed(evt);
-            }
-        });
 
         cancelButton.setBackground(new java.awt.Color(153, 153, 153));
         cancelButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -143,43 +116,9 @@ public class EditMeeting extends javax.swing.JDialog {
             }
         });
 
-        titleLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        titleLabel.setText("Nova reunião");
-
-        jLabel3.setText("Data");
-
-        dateField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        dateField.setToolTipText("dd/MM/yyyy");
-        dateField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
-        dateField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateFieldActionPerformed(evt);
-            }
-        });
-
-        addressField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        addressField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
-        addressField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addressFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Endereço/link");
-
-        jLabel5.setText("Pauta");
-
-        meetingAgendaField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        meetingAgendaField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
-        meetingAgendaField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                meetingAgendaFieldActionPerformed(evt);
-            }
-        });
-
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel1.setText("Membros");
+        jLabel1.setText("Membros presentes");
 
         scrollPane.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -188,77 +127,35 @@ public class EditMeeting extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 8, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(titleField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addressField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(meetingAgendaField)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(154, 154, 154))))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(titleLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 10, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(titleLabel)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(titleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(meetingAgendaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(scrollPane))
-                .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, 649, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,79 +167,30 @@ public class EditMeeting extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void titleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_titleFieldActionPerformed
-
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        Container parent = getParent();
-        if (parent != null) {
-            parent.remove(this);
-            parent.revalidate();
-            parent.repaint();
-        }
+        this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        String title = titleField.getText();
-        String date = dateField.getText();
-        String address = addressField.getText();
-        String meetingAgenda = meetingAgendaField.getText();
+        for (Member member : confirmations) {
+            String response = controller.addConfirmation(this.id, member);
+            if (response.equals("Erro ao atualizar dados da reunião!")) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir a presença de " + member.getName(),
+                        "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);
 
-        if (Validate.hasEmptyData(new ArrayList<>(Arrays.asList(title, date, address, meetingAgenda)))) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos para continuar.",
-                    "Dados vazios", JOptionPane.ERROR_MESSAGE);
-            return;
+                this.dispose();
+                return;
+
+            }
         }
 
-        LocalDate localDate;
-        try {
-            localDate = LocalDate.parse(date, formatter);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Insira a data no formato dd/MM/yyyy",
-                    "Data inválida", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Meeting updtedMeeting = new Meeting(title, localDate, address, meetingAgenda, members);
-        String response = meetingController.editMeeting(this.id, updtedMeeting);
-
-        JOptionPane.showMessageDialog(null, response,
+        JOptionPane.showMessageDialog(null, "Presenças atualizadas com sucesso!",
                 "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);
 
         this.dispose();
 
     }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void dateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateFieldActionPerformed
-
-    private void addressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addressFieldActionPerformed
-
-    private void meetingAgendaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meetingAgendaFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_meetingAgendaFieldActionPerformed
-
-    private void loadMeetingData() {
-        this.meeting = meetingController.getMeetingById(this.id);
-        if (meeting != null) {
-            titleField.setText(meeting.getTitle());
-            addressField.setText(meeting.getAddress());
-            dateField.setText(meeting.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            meetingAgendaField.setText(meeting.getMeetingAgenda());
-
-            titleLabel.setText("Editar " + meeting.getTitle());
-        } else {
-            JOptionPane.showMessageDialog(this, "Reunião não encontrada!", "Error", JOptionPane.ERROR_MESSAGE);
-            dispose();
-        }
-    }
 
     /**
      * @param args the command line arguments
@@ -352,19 +200,10 @@ public class EditMeeting extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField addressField;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JTextField dateField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField meetingAgendaField;
     private javax.swing.JButton saveButton;
     private javax.swing.JScrollPane scrollPane;
-    private javax.swing.JTextField titleField;
-    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,11 +30,11 @@ public class EditMeeting extends javax.swing.JDialog {
     private final int id;
     private final MeetingController meetingController = new MeetingController();
     private final MemberController memberController = new MemberController();
-    private ArrayList<Member> members = new ArrayList<>();
+    private ArrayList<Member> membersOfMeeting = new ArrayList<>();
     private Meeting meeting;
 
     /**
-     * Creates new form EditMember2
+     * Creates new form EditMeeting
      *
      * @param parent
      * @param modal
@@ -53,15 +53,15 @@ public class EditMeeting extends javax.swing.JDialog {
 
         JPanel checkboxPanel = new JPanel();
         checkboxPanel.setLayout(new BoxLayout(checkboxPanel, BoxLayout.Y_AXIS));
-        members = memberController.getAllMembers();
+        ArrayList<Member> members = memberController.getAllMembers();
         members.forEach(member -> {
             JCheckBox checkBox = new JCheckBox(member.getName() + " - " + member.getId());
             checkBox.setSelected(memberAlreadyInList(member));
             checkBox.addItemListener(e -> {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    members.add(member);
+                    membersOfMeeting.add(member);
                 } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                    members.removeIf(listMember -> member.getId() == listMember.getId());
+                    membersOfMeeting.removeIf(listMember -> member.getId() == listMember.getId());
                 }
             });
             checkboxPanel.add(checkBox);
@@ -188,7 +188,7 @@ public class EditMeeting extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 8, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -213,11 +213,11 @@ public class EditMeeting extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(titleLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,12 +275,7 @@ public class EditMeeting extends javax.swing.JDialog {
     }//GEN-LAST:event_titleFieldActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        Container parent = getParent();
-        if (parent != null) {
-            parent.remove(this);
-            parent.revalidate();
-            parent.repaint();
-        }
+        this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -307,8 +302,9 @@ public class EditMeeting extends javax.swing.JDialog {
             return;
         }
 
-        Meeting updtedMeeting = new Meeting(title, localDate, address, meetingAgenda, members);
-        String response = meetingController.editMeeting(this.id, updtedMeeting);
+        Meeting updatedMeeting = new Meeting(title, localDate, address, meetingAgenda, membersOfMeeting);
+        updatedMeeting.setConfirmations(meeting.getConfirmations());
+        String response = meetingController.editMeeting(this.id, updatedMeeting);
 
         JOptionPane.showMessageDialog(null, response,
                 "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);

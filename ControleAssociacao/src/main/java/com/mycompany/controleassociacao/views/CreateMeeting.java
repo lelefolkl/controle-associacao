@@ -46,6 +46,7 @@ public class CreateMeeting extends javax.swing.JPanel {
         members = memberController.getAllMembers();
         members.forEach(member -> {
             JCheckBox checkBox = new JCheckBox(member.getName() + " - " + member.getId());
+            checkBox.setSelected(false);
             checkBox.addItemListener(e -> {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     members.add(member);
@@ -72,7 +73,7 @@ public class CreateMeeting extends javax.swing.JPanel {
         titleField = new javax.swing.JTextField();
         cancelButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        title = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         dateField = new javax.swing.JTextField();
         addressField = new javax.swing.JTextField();
@@ -119,8 +120,8 @@ public class CreateMeeting extends javax.swing.JPanel {
             }
         });
 
-        title.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        title.setText("Nova reunião");
+        titleLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        titleLabel.setText("Nova reunião");
 
         jLabel3.setText("Data");
 
@@ -188,7 +189,7 @@ public class CreateMeeting extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
-                            .addComponent(title))
+                            .addComponent(titleLabel))
                         .addGap(251, 251, 251)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,7 +201,7 @@ public class CreateMeeting extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(title)
+                    .addComponent(titleLabel)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,6 +273,13 @@ public class CreateMeeting extends javax.swing.JPanel {
         String response = meetingController.createMeeting(title, localDate, address, meetingAgenda, members);
         JOptionPane.showMessageDialog(null, response,
                 "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);
+
+        Container parent = getParent();
+        if (parent != null) {
+            parent.remove(this);
+            parent.revalidate();
+            parent.repaint();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void dateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFieldActionPerformed
@@ -299,7 +307,7 @@ public class CreateMeeting extends javax.swing.JPanel {
     private javax.swing.JTextField meetingAgendaField;
     private javax.swing.JButton saveButton;
     private javax.swing.JScrollPane scrollPane;
-    private javax.swing.JLabel title;
     private javax.swing.JTextField titleField;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

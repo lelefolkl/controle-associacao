@@ -51,7 +51,9 @@ public class MeetingController {
     }
 
     public ArrayList<Member> getConfirmationsByMeeting(int meetingId) {
-        return this.getMeetingById(meetingId).getConfirmations();
+        Meeting meeting = this.getMeetingById(meetingId);
+        
+        return meeting.getConfirmations();
     }
 
     public String addConfirmation(int meetingId, Member memberConfirmed) {

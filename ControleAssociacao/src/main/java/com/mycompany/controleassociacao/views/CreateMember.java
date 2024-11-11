@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 public class CreateMember extends javax.swing.JPanel {
 
     /**
-     * Creates new form MemberForm
+     * Creates new form CreateMember
      */
     public CreateMember() {
         initComponents();
@@ -222,8 +222,15 @@ public class CreateMember extends javax.swing.JPanel {
         }
 
         String response = memberController.createMember(name, address, birthLocalDate, cellphone, rg);
-          JOptionPane.showMessageDialog(null, response,
-                    "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, response,
+                "Operação finalizada", JOptionPane.INFORMATION_MESSAGE);
+
+        Container parent = getParent();
+        if (parent != null) {
+            parent.remove(this);
+            parent.revalidate();
+            parent.repaint();
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void birthDateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthDateFieldActionPerformed
