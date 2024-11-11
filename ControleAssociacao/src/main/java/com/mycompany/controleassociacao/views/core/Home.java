@@ -4,7 +4,10 @@
  */
 package com.mycompany.controleassociacao.views.core;
 
+import com.mycompany.controleassociacao.controllers.MemberController;
 import com.mycompany.controleassociacao.views.financialReports.GeneralFinancialReport;
+import com.mycompany.controleassociacao.views.financialReports.MemberFinancialReport;
+import com.mycompany.controleassociacao.views.financialReports.MonthFinancialReport;
 import com.mycompany.controleassociacao.views.payment.RegisterPayment;
 import com.mycompany.controleassociacao.views.payment.ListPayments;
 import com.mycompany.controleassociacao.views.member.ListMembers;
@@ -12,6 +15,7 @@ import com.mycompany.controleassociacao.views.member.CreateMember;
 import com.mycompany.controleassociacao.views.meeting.CreateMeeting;
 import com.mycompany.controleassociacao.views.meeting.ListMeetings;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -125,9 +129,19 @@ public class Home extends javax.swing.JFrame {
         jMenu3.add(jMenuItem7);
 
         jMenuItem8.setText("Relatório por membro");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuItem9.setText("Relatório mensal");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
@@ -214,6 +228,60 @@ public class Home extends javax.swing.JFrame {
         GeneralFinancialReport form = new GeneralFinancialReport();
         showForm(form);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        String response = JOptionPane.showInputDialog(null, "Insira o ID do associado",
+                "Relatório de pagamentos", JOptionPane.INFORMATION_MESSAGE);
+
+        int idInt;
+        MemberController memberController = new MemberController();
+
+        try {
+            idInt = Integer.parseInt(response);
+            if (memberController.getMemberById(idInt) == null) {
+                throw new Exception("Member not found");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Insira um ID válido!",
+                    "ID inválido", JOptionPane.INFORMATION_MESSAGE);
+
+             return;
+        }
+
+        MemberFinancialReport form = new MemberFinancialReport(idInt);
+        showForm(form);
+
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        String response = JOptionPane.showInputDialog(null, "Insira o mês e o ano no formato mm/yyyy",
+                "Relatório de pagamentos", JOptionPane.INFORMATION_MESSAGE);
+
+        int monthInt;
+        int yearInt;
+        try {
+            String month = response.split("/")[0];
+            String year = response.split("/")[1];
+            monthInt = Integer.parseInt(month);
+            if (monthInt < 1 || monthInt > 12) {
+                throw new Exception("Invalid month");
+            }
+            yearInt = Integer.parseInt(year);
+            if (yearInt < 0) {
+                throw new Exception("Invalid year");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Insira um mês e um ano válido",
+                    "Data inválida", JOptionPane.INFORMATION_MESSAGE);
+
+            return;
+        }
+
+        MonthFinancialReport form = new MonthFinancialReport(monthInt, yearInt);
+        showForm(form);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -7,6 +7,7 @@ com\mycompany\controleassociacao\views\meeting\CreateMeeting$1.class
 com\mycompany\controleassociacao\views\meeting\EditMeeting.class
 com\mycompany\controleassociacao\views\meeting\EditMeeting$3.class
 com\mycompany\controleassociacao\views\member\CreateMember$4.class
+com\mycompany\controleassociacao\views\core\Home$9.class
 com\mycompany\controleassociacao\views\meeting\MeetingReportPresences.class
 com\mycompany\controleassociacao\views\meeting\CreateMeeting$5.class
 com\mycompany\controleassociacao\views\payment\RegisterPayment$2.class
@@ -20,6 +21,7 @@ com\mycompany\controleassociacao\views\core\Login$3.class
 com\mycompany\controleassociacao\models\Adm.class
 com\mycompany\controleassociacao\views\core\Home$1.class
 com\mycompany\controleassociacao\views\meeting\EditMeeting$2.class
+com\mycompany\controleassociacao\views\financialReports\MonthFinancialReport.class
 com\mycompany\controleassociacao\views\member\CreateMember$3.class
 com\mycompany\controleassociacao\views\core\Login$1.class
 com\mycompany\controleassociacao\controllers\FinancialReportController.class
@@ -36,6 +38,7 @@ com\mycompany\controleassociacao\views\meeting\EditMeeting$5.class
 com\mycompany\controleassociacao\views\meeting\MeetingPresences.class
 com\mycompany\controleassociacao\views\meeting\CreateMeeting$3.class
 com\mycompany\controleassociacao\views\member\EditMember$3.class
+com\mycompany\controleassociacao\views\financialReports\MemberFinancialReport.class
 com\mycompany\controleassociacao\models\FinancialReport.class
 com\mycompany\controleassociacao\models\Payment.class
 com\mycompany\controleassociacao\views\core\Home$7.class
@@ -67,5 +70,6 @@ com\mycompany\controleassociacao\views\payment\EditPaymentStatus$2.class
 com\mycompany\controleassociacao\models\Meeting.class
 com\mycompany\controleassociacao\views\member\CreateMember$1.class
 com\mycompany\controleassociacao\models\Payment$Method.class
+com\mycompany\controleassociacao\views\core\Home$10.class
 com\mycompany\controleassociacao\views\payment\RegisterPayment$1.class
 com\mycompany\controleassociacao\views\core\Home$2.class
